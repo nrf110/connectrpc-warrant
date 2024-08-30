@@ -1,5 +1,7 @@
 name: CI
-on: push
+on:
+  push:
+    branches: ['!master']
 jobs:
   lint-and-breaking-change-detection:
     runs-on: ubuntu-latest
@@ -7,13 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup
-        uses: bufbuild/buf-setup-action@v1.27.2
+        uses: bufbuild/buf-setup-action@latest
       - name: Lint
-        uses: bufbuild/buf-lint-action@v1
+        uses: bufbuild/buf-lint-action@latest
         with:
           input: github-actions
       - name: Breaking change detection against `main`
-        uses: bufbuild/buf-breaking-action@v1
+        uses: bufbuild/buf-breaking-action@latest
         with:
           input: github-actions
           against: https://github.com/nrf110/connectrpc-warrant.git#branch=main,ref=HEAD~1
