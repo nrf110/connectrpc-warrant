@@ -1,0 +1,16 @@
+name: buf
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {} # support manual runs
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bufbuild/buf-setup-action@v1.27.2
+        with:
+          github_token: ${{ github.token }}
+      - uses: bufbuild/buf-push-action@v1.1.1
+        with:
+          buf_token: ${{ secrets.BUF_TOKEN }}
