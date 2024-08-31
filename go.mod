@@ -1,4 +1,4 @@
-module github.com/nrf110/connectrpc-workos
+module github.com/nrf110/connectrpc-warrant
 
 go 1.23.0
 
