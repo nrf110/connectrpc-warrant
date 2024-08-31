@@ -28,7 +28,7 @@ enum CheckMode {
 }
 
 extend google.protobuf.FieldOptions {
-  optional WarrantField field = 3000;
+  optional WarrantField warrant = 3000;
 }
 
 extend google.protobuf.MethodOptions {
