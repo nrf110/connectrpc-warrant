@@ -19,7 +19,7 @@ message ResourceOptions {
 message CheckOptions {
   bool bulk = 1;
   bool cross_org = 2;
-  CheckMode check_mode = 3;
+  CheckMode mode = 3;
 }
 
 enum CheckMode {
