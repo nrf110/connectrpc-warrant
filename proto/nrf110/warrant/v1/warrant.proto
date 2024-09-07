@@ -38,5 +38,5 @@ extend google.protobuf.FieldOptions {
 extend google.protobuf.MessageOptions {
   string resource = 3000;
   optional SubjectOptions subject = 3100;
-  optional CheckMode check = 3200;
+  optional CheckOptions check = 3200;
 }
