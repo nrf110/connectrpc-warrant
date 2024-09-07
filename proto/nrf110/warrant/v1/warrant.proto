@@ -16,6 +16,12 @@ message ResourceOptions {
   string relation = 2;
 }
 
+message CheckOptions {
+  bool bulk = 1;
+  bool cross_org = 2;
+  CheckMode check_mode = 3;
+}
+
 enum CheckMode {
   all_of = 0;
   any_of = 1;
@@ -29,10 +35,8 @@ extend google.protobuf.FieldOptions {
   optional string meta_name = 3003;
 }
 
-extend google.protobuf.MethodOptions {
-  optional ResourceOptions resource = 3000;
+extend google.protobuf.MessageOptions {
+  string resource = 3000;
   optional SubjectOptions subject = 3100;
-  optional CheckMode check_mode = 3200;
-  optional bool cross_org = 3201;
-  optional bool bulk = 3202;
+  optional CheckMode check = 3200;
 }
