@@ -16,28 +16,23 @@ message ResourceOptions {
   string relation = 2;
 }
 
-message WarrantField {
-  optional bool resource_type = 1;
-  optional bool meta = 2;
-  optional string meta_name = 3;
-}
-
 enum CheckMode {
   all_of = 0;
   any_of = 1;
 }
 
 extend google.protobuf.FieldOptions {
-  optional WarrantField warrant = 3000;
+  // marks this field as a
+  optional bool resources = 3000;
+  optional bool resource_id = 3001;
+  optional bool org_id = 3002;
+  optional string meta_name = 3003;
 }
 
 extend google.protobuf.MethodOptions {
-  optional ResourceOptions method_resource = 3000;
-  optional SubjectOptions method_subject = 3100;
+  optional ResourceOptions resource = 3000;
+  optional SubjectOptions subject = 3100;
   optional CheckMode check_mode = 3200;
-}
-
-extend google.protobuf.ServiceOptions {
-  optional ResourceOptions service_resource = 3000;
-  optional SubjectOptions service_subject = 3100;
+  optional bool cross_org = 3201;
+  optional bool bulk = 3202;
 }
