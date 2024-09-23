@@ -1,4 +1,4 @@
-package connectrpc_workos_test
+package connectrpc_permit_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestWarrant(t *testing.T) {
+func TestPermit(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Warrant Suite")
+	RunSpecs(t, "Permit Suite")
 }

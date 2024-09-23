@@ -3,7 +3,7 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: github.com/nrf110/connectrpc-workos/gen
+      value: github.com/nrf110/connectrpc-permit/gen
 plugins:
   - remote: buf.build/protocolbuffers/go
     out: gen

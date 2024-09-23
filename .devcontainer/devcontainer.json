@@ -1,5 +1,5 @@
 {
-  "name": "connectrpc-workos",
+  "name": "connectrpc-permit",
   "build": {
     "dockerfile": "Dockerfile"
   },
