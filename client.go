@@ -28,7 +28,7 @@ func (client *permitCheckClient) Check(user *User, config CheckConfig) (bool, er
 	case BULK:
 		return client.bulkCheck(user, config)
 	default:
-		return false, fmt.Errorf("unknown CheckType %s", config.Type)
+		return false, fmt.Errorf("unexpected CheckType %s", config.Type)
 	}
 }
 

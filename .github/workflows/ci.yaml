@@ -18,4 +18,4 @@ jobs:
         uses: bufbuild/buf-breaking-action@v1
         with:
           input: github-actions
-          against: https://github.com/nrf110/connectrpc-warrant.git#branch=main,ref=HEAD~1
+          against: https://github.com/nrf110/connectrpc-permit.git#branch=main,ref=HEAD~1

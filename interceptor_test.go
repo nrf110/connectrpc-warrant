@@ -47,6 +47,29 @@ var _ = Describe("Authorizing a ConnectRPC request", func() {
 			Expect(result).To(Equal(res))
 		})
 
+		It("should invoke the next handler when the CheckConfig is public", func(ctx SpecContext) {
+			mock.SetUp(GinkgoT())
+			client := mock.Mock[CheckClient]()
+			mock.When(client.Check(mock.Any[*User](), mock.Any[CheckConfig]())).ThenReturn(true, nil)
+
+			extractor := mock.Mock[TokenExtractor]()
+
+			claimsMapper := mock.Mock[ClaimsMapper]()
+
+			req := mock.Mock[connect.AnyRequest]()
+			mock.When(req.Any()).ThenReturn(&stubCheckable{checks: CheckConfig{
+				Type: PUBLIC,
+			}})
+			res := mock.Mock[connect.AnyResponse]()
+			next := connect.UnaryFunc(func(ctx context.Context, request connect.AnyRequest) (connect.AnyResponse, error) {
+				return res, nil
+			})
+			interceptor := NewPermitInterceptor(client, extractor, claimsMapper)
+			result, err := interceptor(next)(ctx, req)
+			Expect(err).To(BeNil())
+			Expect(result).To(Equal(res))
+		})
+
 		It("should return a permission denied error when the check returns false", func(ctx SpecContext) {
 			mock.SetUp(GinkgoT())
 			client := mock.Mock[CheckClient]()
@@ -60,6 +83,29 @@ var _ = Describe("Authorizing a ConnectRPC request", func() {
 
 			claimsMapper := mock.Mock[ClaimsMapper]()
 			mock.When(claimsMapper.Map(claims)).ThenReturn(&User{Key: "abcde"}, nil)
+
+			req := mock.Mock[connect.AnyRequest]()
+			mock.When(req.Any()).ThenReturn(&stubCheckable{checks: CheckConfig{}})
+			res := mock.Mock[connect.AnyResponse]()
+			next := connect.UnaryFunc(func(ctx context.Context, request connect.AnyRequest) (connect.AnyResponse, error) {
+				return res, nil
+			})
+			interceptor := NewPermitInterceptor(client, extractor, claimsMapper)
+			result, err := interceptor(next)(ctx, req)
+			Expect(err.Error()).To(Equal("permission_denied: permission denied"))
+			Expect(result).To(BeNil())
+		})
+
+		It("should return a permission denied error when the request is unauthenticated", func(ctx SpecContext) {
+			mock.SetUp(GinkgoT())
+			client := mock.Mock[CheckClient]()
+			mock.When(client.Check(mock.Any[*User](), mock.Any[CheckConfig]())).ThenReturn(false, nil)
+
+			extractor := mock.Mock[TokenExtractor]()
+			mock.When(extractor.Extract(mock.Any[connect.AnyRequest]())).ThenReturn(nil, fmt.Errorf("unauthenticated"))
+
+			claimsMapper := mock.Mock[ClaimsMapper]()
+			mock.When(claimsMapper.Map(mock.Any[jwt.Claims]())).ThenReturn(&User{Key: "abcde"}, nil)
 
 			req := mock.Mock[connect.AnyRequest]()
 			mock.When(req.Any()).ThenReturn(&stubCheckable{checks: CheckConfig{}})

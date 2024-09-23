@@ -1,8 +1,6 @@
 {
   "name": "connectrpc-permit",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "dockerComposeFile": "docker-compose.yml",
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "capAdd": ["SYS_PTRACE"],

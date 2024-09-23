@@ -7,9 +7,10 @@ type CheckType string
 const (
 	SINGLE CheckType = "single"
 	BULK             = "bulk"
+	PUBLIC           = "public"
 )
 
-type CheckMode string
+type BulkCheckMode string
 
 const (
 	ALL_OF = "all_of"
@@ -59,8 +60,12 @@ func (c Check) toCheckRequest(user *User) enforcement.CheckRequest {
 
 type CheckConfig struct {
 	Type   CheckType
-	Mode   CheckMode
+	Mode   BulkCheckMode
 	Checks []Check
+}
+
+func (config CheckConfig) IsPublic() bool {
+	return config.Type == PUBLIC
 }
 
 type Checkable interface {

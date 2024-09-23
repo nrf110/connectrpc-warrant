@@ -1,0 +1,24 @@
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    environment:
+      DOCKER_HOST: tcp://localhost:2375
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+    network_mode: host
+    depends_on:
+      - socat
+
+  socat:
+    image: alpine/socat
+    command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
+    user: root
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    network_mode: host
