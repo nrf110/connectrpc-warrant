@@ -5,18 +5,7 @@ package nrf110.permit.v1;
 import "google/protobuf/any.proto";
 import "google/protobuf/descriptor.proto";
 
-message ResourceOptions {
-  string type = 1;
-  string relation = 2;
-}
-
-message CheckOptions {
-  bool bulk = 1;
-  bool cross_org = 2;
-  CheckMode mode = 3;
-}
-
-enum CheckMode {
+enum BulkCheckMode {
   all_of = 0;
   any_of = 1;
 }
@@ -28,6 +17,10 @@ extend google.protobuf.FieldOptions {
 }
 
 extend google.protobuf.MessageOptions {
-  optional ResourceOptions resource = 3000;
-  optional CheckOptions check = 3200;
+  string resource_type = 3000;
+}
+
+extend google.protobuf.MethodOptions {
+  string action = 3000;
+  optional BulkCheckMode bulk_check_mode = 3001;
 }
