@@ -22,11 +22,9 @@ enum CheckMode {
 }
 
 extend google.protobuf.FieldOptions {
-  // marks this field as a collection of resources
-  optional bool resources = 3000;
-  optional bool resource_id = 3001;
-  optional bool tenant_id = 3002;
-  optional string attribute_name = 3003;
+  optional bool resource_id = 3000;
+  optional bool tenant_id = 3001;
+  optional string attribute_name = 3002;
 }
 
 extend google.protobuf.MessageOptions {
