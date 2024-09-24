@@ -5,20 +5,34 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../..:/workspaces:cached
+      - client-certs:/certs/client
     command: sleep infinity
     environment:
-      DOCKER_HOST: tcp://localhost:2375
-      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
-    network_mode: host
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_TLS_VERIFY: 1
+      DOCKER_TLS_CERT_DIR: /certs
+      DOCKER_CERT_PATH: /certs/client
+    networks:
+      - test
     depends_on:
-      - socat
+      - docker
 
-  socat:
-    image: alpine/socat
-    command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
-    user: root
+  docker:
+    image: docker:dind
+    container_name: docker
+    privileged: true
     volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-    network_mode: host
+      - client-certs:/certs/client
+      - ca-certs:/certs/ca
+    networks:
+      - test
+
+volumes:
+  ca-certs:
+  client-certs:
+
+networks:
+  test:
+    name: test
+    driver: bridge
+

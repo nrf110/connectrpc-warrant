@@ -2,22 +2,29 @@ package connectrpc_permit
 
 import (
 	"fmt"
-	"github.com/permitio/permit-golang/pkg/config"
 	"github.com/permitio/permit-golang/pkg/enforcement"
-	"github.com/permitio/permit-golang/pkg/permit"
 )
 
 type CheckClient interface {
 	Check(user *User, config CheckConfig) (bool, error)
 }
 
-type permitCheckClient struct {
-	Client *permit.Client
+// PermitInterface subset of the actual PermitInterface.  Permit currently has a bug
+// where the `AllTenantsCheck` signature does not match between the interface and implementation.
+type PermitInterface interface {
+	Check(user enforcement.User, action enforcement.Action, resource enforcement.Resource) (bool, error)
+	BulkCheck(requests ...enforcement.CheckRequest) ([]bool, error)
+	FilterObjects(user enforcement.User, action enforcement.Action, context map[string]string, resources ...enforcement.ResourceI) ([]enforcement.ResourceI, error)
+	GetUserPermissions(user enforcement.User, tenants ...string) (enforcement.UserPermissions, error)
 }
 
-func NewPermitCheckClient(cfg config.PermitConfig) CheckClient {
+type permitCheckClient struct {
+	Client PermitInterface
+}
+
+func NewCheckClient(client PermitInterface) CheckClient {
 	return &permitCheckClient{
-		Client: permit.NewPermit(cfg),
+		Client: client,
 	}
 }
 
