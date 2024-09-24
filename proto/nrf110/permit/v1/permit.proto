@@ -22,5 +22,6 @@ extend google.protobuf.MessageOptions {
 
 extend google.protobuf.MethodOptions {
   string action = 3000;
-  optional BulkCheckMode bulk_check_mode = 3001;
+  bool public = 3001;
+  optional BulkCheckMode bulk_check_mode = 3002;
 }
