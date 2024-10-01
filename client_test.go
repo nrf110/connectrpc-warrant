@@ -82,7 +82,7 @@ var _ = Describe("Check", func() {
 				checkClient := NewCheckClient(permitClient)
 				result, err := checkClient.Check(stubUser, CheckConfig{
 					Type: BULK,
-					Mode: ALL_OF,
+					Mode: AllOf,
 					Checks: []Check{
 						{
 							Action:   ACTION,
@@ -114,7 +114,7 @@ var _ = Describe("Check", func() {
 				checkClient := NewCheckClient(permitClient)
 				result, err := checkClient.Check(stubUser, CheckConfig{
 					Type: BULK,
-					Mode: ALL_OF,
+					Mode: AllOf,
 					Checks: []Check{
 						{
 							Action:   ACTION,
@@ -150,7 +150,7 @@ var _ = Describe("Check", func() {
 				checkClient := NewCheckClient(permitClient)
 				result, err := checkClient.Check(stubUser, CheckConfig{
 					Type: BULK,
-					Mode: ANY_OF,
+					Mode: AnyOf,
 					Checks: []Check{
 						{
 							Action:   ACTION,
@@ -182,7 +182,7 @@ var _ = Describe("Check", func() {
 				checkClient := NewCheckClient(permitClient)
 				result, err := checkClient.Check(stubUser, CheckConfig{
 					Type: BULK,
-					Mode: ANY_OF,
+					Mode: AnyOf,
 					Checks: []Check{
 						{
 							Action:   ACTION,

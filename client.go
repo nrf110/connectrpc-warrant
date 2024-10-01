@@ -60,7 +60,7 @@ func (client *permitCheckClient) bulkCheck(user *User, config CheckConfig) (bool
 	}
 
 	switch config.Mode {
-	case ALL_OF:
+	case AllOf:
 		for _, result := range results {
 			if !result {
 				return false, nil

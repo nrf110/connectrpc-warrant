@@ -13,8 +13,8 @@ const (
 type BulkCheckMode string
 
 const (
-	ALL_OF = "all_of"
-	ANY_OF = "any_of"
+	AllOf = "all_of"
+	AnyOf = "any_of"
 )
 
 type Attributes map[string]any
