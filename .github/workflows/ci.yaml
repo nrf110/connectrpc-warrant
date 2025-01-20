@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup
-        uses: bufbuild/buf-setup-action@v1.45.0
+        uses: bufbuild/buf-setup-action@v1.50.0
       - name: Lint
         uses: bufbuild/buf-lint-action@v1
         with:
